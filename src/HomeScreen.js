@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, Dimensions } from 'react-native';
-
+import { View, Text, StyleSheet, FlatList, Image, Dimensions, TouchableOpacity } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
     const [products, setProducts] = React.useState([]);
 
     const fetchProductData = async () => {
@@ -29,7 +28,10 @@ const HomeScreen = () => {
     );
 
     const renderItem = ({ item }) => (
-        <View style={styles.itemContainer}>
+        <TouchableOpacity
+            style={styles.itemContainer}
+            onPress={() => navigation.navigate('itemDetail', { item: item })}
+        >
             <Image
                 source={{ uri: item.thumbnail }}
                 style={styles.thumbnail}
@@ -42,7 +44,7 @@ const HomeScreen = () => {
             <View style={styles.priceRow}>
                 <Text style={styles.price}>${item.price}</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 
     return (
