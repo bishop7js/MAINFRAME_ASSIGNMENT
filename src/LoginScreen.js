@@ -29,7 +29,7 @@ const LoginScreen = ({ navigation }) => {
           style={styles.input}
         />
         <Button title="Login" onPress={handleLogin} />
-        <Text style={styles.forgotPassword}>Forgot Password?</Text>
+        <Text style={styles.forgotPassword}>Forgot Password</Text>
       </View>
       <View style={styles.flexSpacer} />
       <Text style={styles.terms}>Terms and Conditions</Text>
@@ -65,8 +65,7 @@ const styles = StyleSheet.create({
   },
   forgotPassword: {
     marginTop: 10,
-    color: '#007bff',
-    textDecorationLine: 'underline',
+    color: '#green',
   },
   flexSpacer: {
     flex: 1,
