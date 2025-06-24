@@ -5,9 +5,14 @@ const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const usernameData = '123';
+  const userpasswordData = "123";
+
   const handleLogin = () => {
-    if (navigation) {
-      navigation.navigate('Home');
+    if (username === usernameData && password === userpasswordData) {
+      navigation.navigate('home');
+    } else {
+      alert('Invalid username or password');
     }
   };
 
@@ -40,7 +45,7 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between', 
+    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#f0f0f0',
   },
@@ -48,7 +53,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 260, 
+    marginTop: 260,
   },
   title: {
     fontSize: 24,
