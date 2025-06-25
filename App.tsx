@@ -23,42 +23,53 @@ function MainTabs() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
+        tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: '#000',
           borderRadius: 25,
           position: 'absolute',
-          left: 20, 
-          right: 20, 
+          left: 20,
+          right: 20,
           bottom: 20,
           height: 70,
           elevation: 10,
           borderTopWidth: 0,
           marginLeft: 30,
           marginRight: 30,
-          paddingBottom: 10,
-        },
-        tabBarLabelStyle: {
-          color: '#fff',
-          fontWeight: 'bold',
-          fontSize: 18,
+          paddingTop: 10,
         },
         tabBarActiveTintColor: '#fff',
         tabBarInactiveTintColor: '#fff',
         tabBarItemStyle: {
           marginTop: 8,
         },
-        tabBarIcon: ({ color, size }) => {
+        tabBarIcon: ({ color, size, focused }) => {
           let iconName = 'home';
           if (route.name === 'home') iconName = 'home-outline';
           else if (route.name === 'Search') iconName = 'search-outline';
           else if (route.name === 'Profile') iconName = 'person-outline';
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return (
+            <View style={{ alignItems: 'center' }}>
+              <Ionicons name={iconName} size={size} color={color} />
+              {focused && (
+                <View
+                  style={{
+                    height: 3,
+                    width: 28,
+                    backgroundColor: '#fff',
+                    borderRadius: 2,
+                    marginTop: 4,
+                  }}
+                />
+              )}
+            </View>
+          );
         },
       })}
     >
-      <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
-      <Tab.Screen name="Search" component={SearchScreen} options={{ tabBarLabel: 'Search' }} />
-      <Tab.Screen name="Profile" component={ProfileScreen} options={{ tabBarLabel: 'Profile' }} />
+      <Tab.Screen name="home" component={HomeScreen} />
+      <Tab.Screen name="Search" component={SearchScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
 }

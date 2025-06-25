@@ -24,7 +24,7 @@ const LoginScreen = ({ navigation }) => {
       <View style={styles.centerSection}>
         <Text style={styles.title}>Practical Test</Text>
         <View style={styles.inputWrapper}>
-          <Feather name="user" size={22} color="#888" style={styles.inputIcon} />
+          <Feather name="user" size={32} color="#888" style={styles.inputIcon} />
           <TextInput
             placeholder="Username"
             placeholderTextColor="#888"
