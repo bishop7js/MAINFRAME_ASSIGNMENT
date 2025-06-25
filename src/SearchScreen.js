@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Image } from 'react-native';
-import { useProductContext } from './ProductContext';
+import { useProductContext } from './contexts/ProductContext';
 
 const SearchScreen = ({ navigation }) => {
     const { products, loading, error, fetchProductData } = useProductContext();

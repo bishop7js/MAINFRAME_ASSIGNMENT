@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, Dimensions, TouchableOpacity } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-import { useProductContext } from './ProductContext';
+import { useProductContext } from './contexts/ProductContext';
 import { useDispatch, useSelector } from 'react-redux';
-import { useCartContext } from './CartContext';
+import { useCartContext } from './contexts/CartContext';
 import { fetchUser } from './store/profileActions';
 
 

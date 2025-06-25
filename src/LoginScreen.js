@@ -6,8 +6,17 @@ const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const currentUser = {
+    username: 'emilys',
+    password: 'emilyspass',
+  }
+
   const handleLogin = () => {
-    navigation.navigate('MainTabs', { screen: 'home' });
+    if (username === currentUser.username && password === currentUser.password) {
+      navigation.navigate('MainTabs', { screen: 'home' });
+    } else {
+      alert('Invalid username or password');
+    }
   };
 
   return (

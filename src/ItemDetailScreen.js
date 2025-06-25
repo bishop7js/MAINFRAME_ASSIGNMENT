@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { useCartContext } from './CartContext';
+import { useCartContext } from './contexts/CartContext';
 
 const ItemDetailScreen = ({ route, navigation }) => {
     const { item } = route.params || {};

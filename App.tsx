@@ -4,13 +4,13 @@ import LoginScreen from './src/LoginScreen';
 import HomeScreen from './src/HomeScreen';
 import ItemDetailScreen from './src/ItemDetailScreen';
 import ProfileScreen from './src/ProfileScreen';
-import SearchScreen from './src/SearchScreen'; // Create this if not exists
+import SearchScreen from './src/SearchScreen'; 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { ProductProvider } from './src/ProductContext';
-import { CartProvider } from './src/CartContext';
+import { ProductProvider } from './src/contexts/ProductContext';
+import { CartProvider } from './src/contexts/CartContext';
 import CartScreen from './src/CartScreen';
 import { Provider } from 'react-redux';
 import store from './src/store';
@@ -18,12 +18,35 @@ import store from './src/store';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// Bottom Tab Navigator for Home, Search, Profile
 function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
+        tabBarStyle: {
+          backgroundColor: '#000',
+          borderRadius: 25,
+          position: 'absolute',
+          left: 20, 
+          right: 20, 
+          bottom: 20,
+          height: 70,
+          elevation: 10,
+          borderTopWidth: 0,
+          marginLeft: 30,
+          marginRight: 30,
+          paddingBottom: 10,
+        },
+        tabBarLabelStyle: {
+          color: '#fff',
+          fontWeight: 'bold',
+          fontSize: 18,
+        },
+        tabBarActiveTintColor: '#fff',
+        tabBarInactiveTintColor: '#fff',
+        tabBarItemStyle: {
+          marginTop: 8,
+        },
         tabBarIcon: ({ color, size }) => {
           let iconName = 'home';
           if (route.name === 'home') iconName = 'home-outline';
@@ -33,9 +56,9 @@ function MainTabs() {
         },
       })}
     >
-      <Tab.Screen name="home" component={HomeScreen} />
-      <Tab.Screen name="Search" component={SearchScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
+      <Tab.Screen name="Search" component={SearchScreen} options={{ tabBarLabel: 'Search' }} />
+      <Tab.Screen name="Profile" component={ProfileScreen} options={{ tabBarLabel: 'Profile' }} />
     </Tab.Navigator>
   );
 }
