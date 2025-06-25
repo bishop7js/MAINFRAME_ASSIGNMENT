@@ -10,6 +10,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ProductProvider } from './src/ProductContext';
+import { CartProvider } from './src/CartContext';
+import CartScreen from './src/CartScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -39,28 +41,35 @@ function MainTabs() {
 function App() {
   return (
     <ProductProvider>
-      <View style={styles.container}>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="login">
-            <Stack.Screen
-              name="login"
-              component={LoginScreen}
-              options={{ title: 'Overview', headerShown: false }}
-            />
-            <Stack.Screen
-              name="MainTabs"
-              component={MainTabs}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="itemDetail"
-              component={ItemDetailScreen}
-              options={{ title: 'Item Detail' }}
-              initialParams={{ id: null }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </View>
+      <CartProvider>
+        <View style={styles.container}>
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="login">
+              <Stack.Screen
+                name="login"
+                component={LoginScreen}
+                options={{ title: 'Overview', headerShown: false }}
+              />
+              <Stack.Screen
+                name="MainTabs"
+                component={MainTabs}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="itemDetail"
+                component={ItemDetailScreen}
+                options={{ title: 'Item Detail' }}
+                initialParams={{ id: null }}
+              />
+              <Stack.Screen
+                name="Cart"
+                component={CartScreen}
+                options={{ title: 'Cart' }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </View>
+      </CartProvider>
     </ProductProvider>
   );
 }

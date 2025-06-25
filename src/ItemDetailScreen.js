@@ -1,8 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, Button } from "react-native";
+import { useCartContext } from './CartContext';
 
-const ItemDetailScreen = ({ route }) => {
+const ItemDetailScreen = ({ route, navigation }) => {
     const { item } = route.params || {};
+    const { addToCart } = useCartContext();
 
     if (!item) {
         return (
@@ -45,7 +47,14 @@ const ItemDetailScreen = ({ route }) => {
                     <Text style={styles.totalPrice}>${totalPrice}</Text>
                 </View>
                 <View style={styles.buttonWrapper}>
-                    <Button title="Add to Cart" color="#000" onPress={() => {}} />
+                    <Button
+                      title="Add to Cart"
+                      color="#000"
+                      onPress={() => {
+                        addToCart({ ...item, quantity });
+                        navigation.navigate('Cart');
+                      }}
+                    />
                 </View>
             </View>
         </View>
