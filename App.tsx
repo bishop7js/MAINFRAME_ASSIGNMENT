@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import LoginScreen from './src/LoginScreen';
 import HomeScreen from './src/HomeScreen';
 import ItemDetailScreen from './src/ItemDetailScreen';
@@ -63,7 +63,27 @@ function MainTabs() {
   );
 }
 
+function SplashScreen() {
+  return (
+    <View style={styles.splashContainer}>
+      <Text style={styles.splashTitle}>MAINFRAME</Text>
+      <ActivityIndicator size="large" color="#50C878" style={{ marginTop: 24 }} />
+    </View>
+  );
+}
+
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <SplashScreen />;
+  }
+
   return (
     <Provider store={store}>
       <ProductProvider>
@@ -86,7 +106,7 @@ function App() {
                   component={ItemDetailScreen}
                   options={{
                     title: 'Item details',
-                    headerTitleAlign: 'center', // <-- This centers the title
+                    headerTitleAlign: 'center',
                   }}
                   initialParams={{ id: null }}
                 />
@@ -107,6 +127,18 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  splashContainer: {
+    flex: 1,
+    backgroundColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  splashTitle: {
+    color: '#fff',
+    fontSize: 36,
+    fontWeight: 'bold',
+    letterSpacing: 2,
   },
 });
 

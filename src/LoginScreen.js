@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   customButton: {
     backgroundColor: '#50C878',
     borderRadius: 25,
-    paddingVertical: 18, // More padding top and bottom
+    paddingVertical: 18, 
     alignItems: 'center',
     width: '100%',
   },

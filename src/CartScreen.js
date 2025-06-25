@@ -4,7 +4,7 @@ import { useCartContext } from './contexts/CartContext';
 import Feather from 'react-native-vector-icons/Feather';
 
 const CartScreen = ({ navigation }) => {
-  const { cartList, addToCart, removeFromCart, clearCart } = useCartContext();
+  const { cartList, addToCart, clearCart } = useCartContext();
   const [menuVisible, setMenuVisible] = useState(false);
 
   const subtotal = cartList.reduce((sum, item) => sum + item.price * item.quantity, 0);
