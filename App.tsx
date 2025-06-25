@@ -9,6 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { ProductProvider } from './src/ProductContext';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -37,28 +38,30 @@ function MainTabs() {
 
 function App() {
   return (
-    <View style={styles.container}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="login">
-          <Stack.Screen
-            name="login"
-            component={LoginScreen}
-            options={{ title: 'Overview', headerShown: false }}
-          />
-          <Stack.Screen
-            name="MainTabs"
-            component={MainTabs}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="itemDetail"
-            component={ItemDetailScreen}
-            options={{ title: 'Item Detail' }}
-            initialParams={{ id: null }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </View>
+    <ProductProvider>
+      <View style={styles.container}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="login">
+            <Stack.Screen
+              name="login"
+              component={LoginScreen}
+              options={{ title: 'Overview', headerShown: false }}
+            />
+            <Stack.Screen
+              name="MainTabs"
+              component={MainTabs}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="itemDetail"
+              component={ItemDetailScreen}
+              options={{ title: 'Item Detail' }}
+              initialParams={{ id: null }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </View>
+    </ProductProvider>
   );
 }
 

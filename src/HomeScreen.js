@@ -1,19 +1,10 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, Dimensions, TouchableOpacity } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { useProductContext } from './ProductContext';
 
 const HomeScreen = ({ navigation }) => {
-    const [products, setProducts] = React.useState([]);
-
-    const fetchProductData = async () => {
-        try {
-            const response = await fetch('https://dummyjson.com/products');
-            const data = await response.json();
-            setProducts(data.products);
-        } catch (error) {
-            console.error('Error fetching product data:', error);
-        }
-    };
+    const { products, loading, error, fetchProductData } = useProductContext();
 
     useEffect(() => {
         fetchProductData();
