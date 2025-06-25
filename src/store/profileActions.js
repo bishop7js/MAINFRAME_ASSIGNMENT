@@ -1,16 +1,34 @@
-export const FETCH_PROFILE_REQUEST = 'FETCH_PROFILE_REQUEST';
-export const FETCH_PROFILE_SUCCESS = 'FETCH_PROFILE_SUCCESS';
-export const FETCH_PROFILE_FAILURE = 'FETCH_PROFILE_FAILURE';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export const fetchProfile = () => {
-    return async (dispatch) => {
-        dispatch({ type: FETCH_PROFILE_REQUEST });
-        try {
-            const response = await fetch('https://dummyjson.com/users/1');
-            const data = await response.json();
-            dispatch({ type: FETCH_PROFILE_SUCCESS, payload: data });
-        } catch (error) {
-            dispatch({ type: FETCH_PROFILE_FAILURE, error: error.message });
-        }
-    };
-};
+export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
+  const response = await fetch('https://dummyjson.com/users/1');
+  if (!response.ok) throw new Error('Failed to fetch profile');
+  return await response.json();
+});
+
+const userSlice = createSlice({
+  name: 'user',
+  initialState: {
+    user: null,
+    loading: false,
+    error: null,
+  },
+  reducers: {},
+  extraReducers: builder => {
+    builder
+      .addCase(fetchUser.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
+  },
+});
+
+export default userSlice.reducer;

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, Button } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useCartContext } from './CartContext';
 
 const ItemDetailScreen = ({ route, navigation }) => {
@@ -14,47 +14,62 @@ const ItemDetailScreen = ({ route, navigation }) => {
         );
     }
 
-    // Use minimumOrderQuantity if available, otherwise default to 1
     const quantity = item.minimumOrderQuantity || 1;
     const totalPrice = (item.price * quantity).toFixed(2);
 
     return (
         <View style={styles.container}>
-            {/* Thumbnail */}
             <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
 
-            {/* Title and Rating on the same line */}
             <View style={styles.titleRow}>
                 <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.rating}>{item.rating} ★</Text>
+                <View style={styles.ratingBox}>
+                    <Text style={styles.ratingText}>{item.rating} </Text>
+                    <Text style={styles.ratingStar}>★</Text>
+                </View>
             </View>
+            {item.discountPercentage && (
+                <View style={styles.discountBox}>
+                    <Text style={styles.discountText}>
+                        Discount {item.discountPercentage}%
+                    </Text>
+                </View>
+            )}
 
-            {/* Description */}
             <Text style={styles.description}>{item.description}</Text>
 
-            {/* Gap between description and quantity */}
+            {/* Tags section */}
+            {item.tags && item.tags.length > 0 && (
+                <View style={{ marginTop: 16 }}>
+                    <Text style={{ fontWeight: 'bold', color: '#222', marginBottom: 4 }}>Tags</Text>
+                    <Text>
+                        {item.tags.map(tag => `#${tag}`).join(' ')}
+                    </Text>
+                </View>
+            )}
+
             <View style={{ height: 24 }} />
 
-            {/* Quantity on next line */}
             <View style={styles.row}>
                 <Text style={styles.quantity}>Quantity: {quantity}</Text>
             </View>
 
-            {/* Total Price label above price and Add to Cart button */}
             <View style={styles.bottomRow}>
                 <View>
                     <Text style={styles.totalLabel}>Total Price</Text>
                     <Text style={styles.totalPrice}>${totalPrice}</Text>
                 </View>
                 <View style={styles.buttonWrapper}>
-                    <Button
-                      title="Add to Cart"
-                      color="#000"
+                    <TouchableOpacity
+                      style={styles.addToCartButton}
                       onPress={() => {
                         addToCart({ ...item, quantity });
                         navigation.navigate('Cart');
                       }}
-                    />
+                      activeOpacity={0.8}
+                    >
+                      <Text style={styles.addToCartText}>Add to Cart</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -69,7 +84,7 @@ const styles = StyleSheet.create({
     },
     thumbnail: {
         width: "100%",
-        height: 300, // Increased height
+        height: 300, 
         borderRadius: 8,
         marginTop: 64,
         marginBottom: 16,
@@ -87,10 +102,24 @@ const styles = StyleSheet.create({
         flex: 1,
         flexWrap: "wrap",
     },
-    rating: {
+    ratingBox: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#FFE5B4', 
+        borderRadius: 8,
+        paddingHorizontal: 10,
+        paddingVertical: 2,
+    },
+    ratingText: {
         fontSize: 18,
-        color: "#888",
-        marginLeft: 12,
+        color: '#FF8C00', 
+        fontWeight: 'bold',
+    },
+    ratingStar: {
+        fontSize: 18,
+        color: '#FF8C00', 
+        fontWeight: 'bold',
+        marginLeft: 4,
     },
     row: {
         flexDirection: "row",
@@ -134,6 +163,48 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: "100%",
         marginTop: 16,
+    },
+    addToCartButton: {
+        backgroundColor: '#000',
+        borderRadius: 20,
+        paddingVertical: 12,
+        paddingHorizontal: 28,
+        alignItems: 'center',
+    },
+    addToCartText: {
+        color: '#fff',
+        fontSize: 16,
+    },
+    discountBox: {
+        backgroundColor: '#FFE5B4', 
+        borderRadius: 8,
+        paddingHorizontal: 10,
+        paddingVertical: 2,
+        alignSelf: 'flex-start',
+    },
+    discountText: {
+        fontSize: 16,
+        color: '#FF8C00', 
+        fontWeight: 'bold',
+    },
+    tagsContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    tag: {
+        backgroundColor: '#f0f0f0',
+        borderRadius: 12,
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+        marginRight: 8,
+        marginBottom: 6,
+    },
+    tagText: {
+        fontSize: 13,
+        color: '#FF8C00',
+        fontWeight: 'bold',
     },
 });
 

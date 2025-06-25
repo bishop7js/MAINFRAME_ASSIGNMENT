@@ -1,30 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from './store/profileActions';
 
 const LABEL_WIDTH = 110;
 
 const ProfileScreen = () => {
-  const [profileData, setProfileData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const { user: profileData, loading, error } = useSelector(state => state.user);
 
   useEffect(() => {
-    const fetchProfileDetails = async () => {
-      try {
-        const response = await fetch('https://dummyjson.com/users/1');
-        if (!response.ok) throw new Error('Failed to fetch profile');
-        const data = await response.json();
-        setProfileData(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProfileDetails();
-  }, []);
+    dispatch(fetchUser());
+  }, [dispatch]);
 
   if (loading) {
     return (
