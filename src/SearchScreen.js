@@ -13,7 +13,7 @@ const SearchScreen = ({ navigation }) => {
 
     useEffect(() => {
         if (!search) {
-            setFiltered(products);
+            setFiltered([]);
         } else {
             setFiltered(
                 products.filter(

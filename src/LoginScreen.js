@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 
 const LoginScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const currentUser = {
-    username: 'emilys',
-    password: 'emilyspass',
-  }
+    password: '123',
+  };
 
   const handleLogin = () => {
-    if (username === currentUser.username && password === currentUser.password) {
-      navigation.navigate('MainTabs', { screen: 'home' });
+    if (
+      password === currentUser.password
+    ) {
+      navigation.navigate('MainTabs', {screen: 'TodoList'});
     } else {
       alert('Invalid username or password');
     }
@@ -22,22 +27,13 @@ const LoginScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.centerSection}>
-        <Text style={styles.title}>Practical Test</Text>
-        <View style={styles.inputWrapper}>
-          <Feather name="user" size={32} color="#888" style={styles.inputIcon} />
-          <TextInput
-            placeholder="Username"
-            placeholderTextColor="#888"
-            value={username}
-            onChangeText={setUsername}
-            style={[styles.input, { fontWeight: 'bold' }]}
-            autoCapitalize="none"
-          />
+        <Text style={styles.title}>To Do</Text>
+        <View style={styles.labelWrapper}>
+          <Text style={styles.labelText}>Enter Password</Text>
         </View>
+
         <View style={styles.inputWrapper}>
-          <Feather name="lock" size={22} color="#888" style={styles.inputIcon} />
           <TextInput
-            placeholder="Password"
             placeholderTextColor="#888"
             value={password}
             onChangeText={setPassword}
@@ -46,14 +42,15 @@ const LoginScreen = ({ navigation }) => {
           />
         </View>
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.customButton} onPress={handleLogin} activeOpacity={0.8}>
-            <Text style={styles.customButtonText}>Log in</Text>
+          <TouchableOpacity
+            style={styles.customButton}
+            onPress={handleLogin}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.customButtonText}>Unlock</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.forgotPassword}>Forgot Password</Text>
       </View>
-      <View style={styles.flexSpacer} />
-      <Text style={styles.terms}>Terms and Conditions</Text>
     </View>
   );
 };
@@ -65,6 +62,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#ffffff',
   },
+
+  labelWrapper: {
+    width: '80%',
+    alignItems: 'flex-start',
+    marginBottom: 4,
+  },
+  labelText: {
+    fontSize: 16,
+    color: '#333',
+  },
+
   centerSection: {
     width: '100%',
     alignItems: 'center',
@@ -106,7 +114,7 @@ const styles = StyleSheet.create({
   customButton: {
     backgroundColor: '#50C878',
     borderRadius: 25,
-    paddingVertical: 18, 
+    paddingVertical: 18,
     alignItems: 'center',
     width: '100%',
   },

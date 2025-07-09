@@ -3,8 +3,9 @@ import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import LoginScreen from './src/LoginScreen';
 import HomeScreen from './src/HomeScreen';
 import ItemDetailScreen from './src/ItemDetailScreen';
+import TodoListScreen from './src/TodoListScreen';
 import ProfileScreen from './src/ProfileScreen';
-import SearchScreen from './src/SearchScreen'; 
+import SearchScreen from './src/SearchScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -14,6 +15,7 @@ import { CartProvider } from './src/contexts/CartContext';
 import CartScreen from './src/CartScreen';
 import { Provider } from 'react-redux';
 import store from './src/store';
+import { TodoProvider } from './src/contexts/TodoContext';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -48,6 +50,7 @@ function MainTabs() {
           if (route.name === 'home') iconName = 'home-outline';
           else if (route.name === 'Search') iconName = 'search-outline';
           else if (route.name === 'Profile') iconName = 'person-outline';
+          else if (route.name === 'todo') iconName = 'home';
           return (
             <View style={{ alignItems: 'center' }}>
               <Ionicons name={iconName} size={size} color={color} />
@@ -67,18 +70,30 @@ function MainTabs() {
         },
       })}
     >
-      <Tab.Screen name="home" component={HomeScreen} />
+      <Tab.Screen name="todo" component={TodoListScreen} />
       <Tab.Screen name="Search" component={SearchScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
 }
 
 function SplashScreen() {
   return (
-    <View style={styles.splashContainer}>
-      <Text style={styles.splashTitle}>MAINFRAME</Text>
-      <ActivityIndicator size="large" color="#50C878" style={{ marginTop: 24 }} />
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <View
+        style={{
+          width: 100,
+          height: 100,
+          backgroundColor: '#50C878',
+          borderRadius: 12,
+        }}
+      />
     </View>
   );
 }
@@ -97,40 +112,47 @@ function App() {
 
   return (
     <Provider store={store}>
-      <ProductProvider>
-        <CartProvider>
-          <View style={styles.container}>
-            <NavigationContainer>
-              <Stack.Navigator initialRouteName="login">
-                <Stack.Screen
-                  name="login"
-                  component={LoginScreen}
-                  options={{ title: 'Overview', headerShown: false }}
-                />
-                <Stack.Screen
-                  name="MainTabs"
-                  component={MainTabs}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name="itemDetail"
-                  component={ItemDetailScreen}
-                  options={{
-                    title: 'Item details',
-                    headerTitleAlign: 'center',
-                  }}
-                  initialParams={{ id: null }}
-                />
-                <Stack.Screen
-                  name="Cart"
-                  component={CartScreen}
-                  options={{ title: 'Cart' }}
-                />
-              </Stack.Navigator>
-            </NavigationContainer>
-          </View>
-        </CartProvider>
-      </ProductProvider>
+      <TodoProvider>
+        <ProductProvider>
+          <CartProvider>
+            <View style={styles.container}>
+              <NavigationContainer>
+                <Stack.Navigator initialRouteName="login">
+                  <Stack.Screen
+                    name="login"
+                    component={LoginScreen}
+                    options={{ title: 'Overview', headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="MainTabs"
+                    component={MainTabs}
+                    options={{ headerShown: true, title: 'Todo' }}
+                  />
+                  <Stack.Screen
+                    name="itemDetail"
+                    component={ItemDetailScreen}
+                    options={{
+                      title: 'Item details',
+                      headerTitleAlign: 'center',
+                    }}
+                    initialParams={{ id: null }}
+                  />
+                  <Stack.Screen
+                    name="Cart"
+                    component={CartScreen}
+                    options={{ title: 'Cart' }}
+                  />
+                  <Stack.Screen
+                    name="todo"
+                    component={TodoListScreen}
+                    options={{ title: 'Todo' }}
+                  />
+                </Stack.Navigator>
+              </NavigationContainer>
+            </View>
+          </CartProvider>
+        </ProductProvider>
+      </TodoProvider>
     </Provider>
   );
 }
