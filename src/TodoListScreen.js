@@ -1,5 +1,6 @@
 import React, { useEffect, useState} from "react";
-import { View, Text, TextInput, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, FlatList, TouchableOpacity, Modal } from "react-native";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTodoContext } from "./contexts/TodoContext";
 
 const TodoListScreen = ({navigation}) => {
@@ -99,6 +100,23 @@ const TodoListScreen = ({navigation}) => {
                 >
                     <Text style={{ color: "#fff", fontWeight: "bold" }}>Save</Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                    style={{
+                        backgroundColor: "#50C878",
+                        paddingVertical: 12,
+                        paddingHorizontal: 18,
+                        borderRadius: 8,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginTop: 8,
+                    }}
+                    onPress={() => {
+                        
+                        setOpenEditModal(false);
+                    }}
+                >
+                    <Text style={{ color: "#fff", fontWeight: "bold" }}>Close</Text>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -128,9 +146,11 @@ const TodoListScreen = ({navigation}) => {
                     paddingVertical: 6,
                     paddingHorizontal: 12,
                     borderRadius: 6,
+                    flexDirection: 'row',
+                    alignItems: 'center',
                 }}
             >
-                <Text style={{ color: '#fff', fontWeight: 'bold' }}>Delete</Text>
+                <Ionicons name="trash-bin" size={18} color="#fff" style={{ marginRight: 4 }} />
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => handleEdit(item.id)}
@@ -160,13 +180,19 @@ const TodoListScreen = ({navigation}) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
-            {openEditModal && renderEditToDoModal()}
+            {/* {openEditModal && renderEditToDoModal()} */}
+            <Modal transparent visible={openEditModal}>
+                <View style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)', justifyContent: 'center', alignItems: 'center'}}>
+                    {renderEditToDoModal()}
+                </View>
+            </Modal>
             {renderTodoInput()}
             {renderTodayQuote()}
             <FlatList
                 data={sampleTodos}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={renderTodoItem}
+                contentContainerStyle={{ paddingBottom: 90 }} 
             />
         </View>
     );
